@@ -1,6 +1,7 @@
 # Diva Dynasty
 
 **Diva Dynasty** is a console application that provides a fun and engaging casino experience designed with female players in mind. The heart of this experience is the **Wallet**, which allows players to manage their funds, place bets, and enjoy a simple yet thrilling slot game.
+![Diva Dynasty Logo](./divas-dynasty-logo.png)
 
 ## Features
 
