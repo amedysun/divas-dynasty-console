@@ -1,6 +1,5 @@
 ﻿using Serilog;
 
-using CommandLine;
 using divas_dynasty.game;
 using divas_dynasty.wallet;
 
@@ -24,10 +23,6 @@ public class Program
         DepositHandler depositHandler = new(wallet, depositValidator);
         WithdrawHandler withdrawHandler = new(wallet, withdrawValidator);
         BetHandler betHandler = new(wallet, game, bettingValidator);
-
-        Parser.Default.ParseArguments<Options>(args)
-            .WithParsed(opts => RunOptionsAndReturnExitCode(opts, depositHandler, withdrawHandler, betHandler))
-            .WithNotParsed(HandleParseError);
 
         bool running = true;
 
@@ -94,35 +89,5 @@ public class Program
 
         Console.WriteLine("Press any key to exit.");
         Console.ReadKey();
-    }
-
-    static void RunOptionsAndReturnExitCode(Options opts, DepositHandler depositHandler, WithdrawHandler withdrawHandler, BetHandler betHandler)
-    {
-        if (opts.DepositAmount.HasValue)
-        {
-            depositHandler.Handle(opts.DepositAmount.Value);
-        }
-
-        if (opts.WithdrawAmount.HasValue)
-        {
-            withdrawHandler.Handle(opts.WithdrawAmount.Value);
-        }
-
-        if (opts.BetAmount.HasValue)
-        {
-            betHandler.Handle(opts.BetAmount.Value);
-        }
-
-        if (opts.Exit)
-        {
-            Log.Information("Exiting the game.");
-            Environment.Exit(0);
-        }
-    }
-
-    static void HandleParseError(IEnumerable<Error> errs)
-    {
-        // Handle errors here
-        Log.Error("Failed to parse command line arguments.");
     }
 }
