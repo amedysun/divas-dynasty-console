@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "divas-dynasty": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
