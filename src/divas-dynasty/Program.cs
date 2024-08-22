@@ -1,7 +1,8 @@
-﻿using Serilog;
-
+﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using divas_dynasty.game;
 using divas_dynasty.wallet;
+using divas_dynasty.shared;
 
 namespace divas_dynasty;
 
@@ -13,16 +14,13 @@ public class Program
             .WriteTo.Console()
             .CreateLogger();
 
-        Wallet wallet = new();
-        Game game = new();
+        var serviceCollection = new ServiceCollection();
+        ConfigureServices(serviceCollection);
+        var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        DepositValidator depositValidator = new();
-        WithdrawValidator withdrawValidator = new();
-        BettingValidator bettingValidator = new();
-
-        DepositHandler depositHandler = new(wallet, depositValidator);
-        WithdrawHandler withdrawHandler = new(wallet, withdrawValidator);
-        BetHandler betHandler = new(wallet, game, bettingValidator);
+        var depositHandler = serviceProvider.GetRequiredService<DepositHandler>();
+        var withdrawHandler = serviceProvider.GetRequiredService<WithdrawHandler>();
+        var betHandler = serviceProvider.GetRequiredService<BetHandler>();
 
         bool running = true;
 
@@ -32,7 +30,7 @@ public class Program
             string? input = Console.ReadLine();
             if (input == null)
             {
-                Console.WriteLine("No input received. Please try again.");
+                Log.Error("No input received. Please try again.");
                 continue;
             }
 
@@ -49,7 +47,7 @@ public class Program
                         }
                         else
                         {
-                            Console.WriteLine("Invalid deposit amount.");
+                            Log.Error("Invalid deposit amount.");
                         }
                         break;
                     case "withdraw":
@@ -59,7 +57,7 @@ public class Program
                         }
                         else
                         {
-                            Console.WriteLine("Invalid withdrawal amount.");
+                            Log.Error("Invalid withdrawal amount.");
                         }
                         break;
                     case "bet":
@@ -69,25 +67,35 @@ public class Program
                         }
                         else
                         {
-                            Console.WriteLine("Invalid bet amount.");
+                            Log.Error("Invalid bet amount.");
                         }
                         break;
                     case "exit":
                         running = false;
                         Console.WriteLine("Thank you for playing Wonder Woman! Hope to see you again soon.");
+                        Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Invalid action. Please try again.");
+                        Log.Error("Invalid action. Please try again.");
                         break;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Log.Error($"{ex.Message}");
             }
         }
+    }
 
-        Console.WriteLine("Press any key to exit.");
-        Console.ReadKey();
+    private static void ConfigureServices(IServiceCollection services)
+    {
+        services.AddSingleton<Wallet>();
+        services.AddSingleton<Game>();
+        services.AddSingleton<IValidator<decimal>, DepositValidator>();
+        services.AddSingleton<IValidator<WithdrawData>, WithdrawValidator>();
+        services.AddSingleton<IValidator<BettingData>, BettingValidator>();
+        services.AddSingleton<DepositHandler>();
+        services.AddSingleton<WithdrawHandler>();
+        services.AddSingleton<BetHandler>();
     }
 }
