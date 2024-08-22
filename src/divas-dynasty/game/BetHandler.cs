@@ -4,26 +4,20 @@ using Serilog;
 
 namespace divas_dynasty.game;
 
-public class BetHandler(Wallet wallet, Game game, IValidator<decimal> validator) : IHandler<decimal>
+public class BetHandler(Wallet wallet, Game game, IValidator<BettingData> validator) : IHandler<decimal>
 {
     private readonly Wallet _wallet = wallet;
     private readonly Game _game = game;
-    private readonly IValidator<decimal> _validator = validator;
+    private readonly IValidator<BettingData> _validator = validator;
 
     public void Handle(decimal betAmount)
     {
-        _validator.Validate(betAmount);
-        decimal winAmount = _game.PlaceBet(betAmount);
-        _wallet.UpdateBalance(betAmount, winAmount);
+        _validator.Validate(new BettingData(betAmount, _wallet.Balance));
+        BetResult betResult = _game.PlaceBet(betAmount);
+        _wallet.UpdateBalance(betAmount, betResult.WinAmount);
 
-        switch (winAmount)
-        {
-            case > 0:
-                Log.Information($"Congrats you won ${winAmount:F2}! Your current balance is: ${_wallet.Balance:F2}");
-                break;
-            default:
-                Log.Information($"No luck this time! Your current balance is: ${_wallet.Balance:F2}");
-                break;
-        }
+        Log.Information(betResult.IsWin
+            ? $"You won: ${betResult.WinAmount:F2}. Current balance: ${_wallet.Balance:F2}"
+            : $"You lost the bet. Current balance: ${_wallet.Balance:F2}");
     }
 }
