@@ -1,71 +1,54 @@
-using Serilog;
 using divas_dynasty.wallet;
+using divas_dynasty.shared;
 
 namespace divas_dynasty.game;
 
-public class GameHandler(DepositHandler depositHandler, WithdrawHandler withdrawHandler, BetHandler betHandler)
+public class GameHandler(
+    IHandler<DepositCommand> depositHandler,
+    IHandler<WithdrawCommand> withdrawHandler,
+    IHandler<BetCommand> betHandler
+    ) : IHandler<string>
 {
-    private readonly DepositHandler _depositHandler = depositHandler;
-    private readonly WithdrawHandler _withdrawHandler = withdrawHandler;
-    private readonly BetHandler _betHandler = betHandler;
 
-    public void Handle()
+    public void Handle(string input)
     {
-        while (true)
+        if (string.IsNullOrWhiteSpace(input))
         {
-            Console.WriteLine("Please, submit action:");
-            string? input = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                Log.Error("No input received. Please try again.");
-                continue;
-            }
-
-            string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length < 2)
-            {
-                Log.Error("Invalid command format. Please try again.");
-                continue;
-            }
-
-            try
-            {
-                ProcessCommand(parts);
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"{ex.Message}");
-            }
+            throw new InvalidOperationException("No input received. Please try again.");
         }
-    }
 
-    private void ProcessCommand(string[] parts)
-    {
+        string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        if (parts.First() is "exit")
+        {
+            Console.WriteLine("Thank you for playing Wonder Woman! Hope to see you again soon.");
+            Environment.Exit(0);
+        }
+
+        if (parts.Length < 2)
+        {
+            throw new InvalidOperationException("Invalid command format. Please try again.");
+        }
+
         string action = parts[0].ToLower();
         if (!decimal.TryParse(parts[1], out decimal amount))
         {
-            Log.Error("Invalid amount.");
-            return;
+            throw new InvalidOperationException("Invalid amount.");
         }
 
         switch (action)
         {
             case "deposit":
-                _depositHandler.Handle(amount);
+                depositHandler.Handle(new DepositCommand(amount));
                 break;
             case "withdraw":
-                _withdrawHandler.Handle(amount);
+                withdrawHandler.Handle(new WithdrawCommand(amount));
                 break;
             case "bet":
-                _betHandler.Handle(amount);
-                break;
-            case "exit":
-                Console.WriteLine("Thank you for playing Wonder Woman! Hope to see you again soon.");
-                Environment.Exit(0);
+                betHandler.Handle(new BetCommand(amount));
                 break;
             default:
-                Log.Error("Invalid action. Please try again.");
-                break;
+                throw new InvalidOperationException("Invalid action. Please try again.");
         }
     }
 }

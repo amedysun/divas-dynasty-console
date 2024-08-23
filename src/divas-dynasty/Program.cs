@@ -18,7 +18,18 @@ namespace divas_dynasty
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var gameHandler = serviceProvider.GetRequiredService<GameHandler>();
-            gameHandler.Handle();
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("Please, submit action:");
+                    gameHandler.Handle(Console.ReadLine());
+                }
+                catch (Exception ex)
+                {
+                    Log.Error($"{ex.Message}");
+                }
+            }
         }
     }
 }

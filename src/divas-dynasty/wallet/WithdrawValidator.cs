@@ -6,12 +6,12 @@ public class WithdrawValidator : IValidator<WithdrawData>
 {
     public void Validate(WithdrawData value)
     {
-        if (value.Amount <= 0)
+        if (value.WithdrawAmount <= 0)
         {
             throw new ArgumentException("Withdraw amount must be greater than zero.");
         }
 
-        if (value.Amount > value.Balance)
+        if (value.WithdrawAmount > value.Balance)
         {
             throw new ArgumentException("Insufficient balance to withdraw the requested amount.");
         }

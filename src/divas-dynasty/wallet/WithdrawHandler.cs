@@ -3,15 +3,14 @@ using Serilog;
 
 namespace divas_dynasty.wallet;
 
-public class WithdrawHandler(Wallet wallet, IValidator<WithdrawData> validator) : IHandler<decimal>
+public class WithdrawHandler(Wallet wallet, IValidator<WithdrawData> validator) : IHandler<WithdrawCommand>
 {
-    private readonly Wallet _wallet = wallet;
-    private readonly IValidator<WithdrawData> _validator = validator;
-
-    public void Handle(decimal amount)
+    public void Handle(WithdrawCommand command)
     {
-        _validator.Validate(new WithdrawData(amount, _wallet.Balance));
-        _wallet.Withdraw(amount);
-        Log.Information($"Your withdrawal of ${amount:F2} was successful. Your current balance is: ${_wallet.Balance:F2}");
+        var withdrawAmount = command.Amount;
+        var walletBalance = wallet.Balance;
+        validator.Validate(new WithdrawData(withdrawAmount, walletBalance));
+        wallet.Withdraw(withdrawAmount);
+        Log.Information($"Your withdrawal of ${withdrawAmount:F2} was successful. Your current balance is: ${walletBalance:F2}");
     }
 }
