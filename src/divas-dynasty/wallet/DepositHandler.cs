@@ -5,7 +5,6 @@ namespace divas_dynasty.wallet;
 
 public class DepositHandler(Wallet wallet, IValidator<decimal> validator) : IHandler<DepositCommand>
 {
-
     public void Handle(DepositCommand command)
     {
         var depositAmount = command.Amount;
