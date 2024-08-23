@@ -48,6 +48,13 @@ public class GameHandlerTests
     }
 
     [Fact]
+    public void Handle_ShouldInvokeDepositHandler_WhenCommandIsUpperCaseDeposit()
+    {
+        _gameHandler.Handle("DEPOSIT 100");
+        _mockDepositHandler.Verify(h => h.Handle(It.Is<DepositCommand>(c => c.Amount == 100)), Times.Once);
+    }
+
+    [Fact]
     public void Handle_ShouldInvokeWithdrawHandler_WhenCommandIsWithdraw()
     {
         _gameHandler.Handle("withdraw 50");
