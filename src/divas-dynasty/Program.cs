@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using divas_dynasty.game;
-using divas_dynasty.shared;
+using domain.game;
+using domain.shared;
 
 namespace divas_dynasty
 {

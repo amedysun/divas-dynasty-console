@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 using Moq;
-using divas_dynasty.wallet;
-using divas_dynasty.shared;
-using divas_dynasty.game;
+using domain.wallet;
+using domain.shared;
+using domain.game;
 
 namespace game;
 

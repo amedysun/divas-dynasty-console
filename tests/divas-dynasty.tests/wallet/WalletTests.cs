@@ -1,5 +1,5 @@
 using Xunit;
-using divas_dynasty.wallet;
+using domain.wallet;
 
 namespace wallet;
 

@@ -1,4 +1,4 @@
-﻿namespace divas_dynasty.game;
+﻿namespace domain.game;
 
 public class Game(Random random)
 {

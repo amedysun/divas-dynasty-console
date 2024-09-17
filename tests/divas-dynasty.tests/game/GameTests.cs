@@ -1,5 +1,5 @@
 ﻿using System;
-using divas_dynasty.game;
+using domain.game;
 using Moq;
 using Xunit;
 

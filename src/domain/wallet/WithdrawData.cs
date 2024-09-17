@@ -1,3 +1,3 @@
-﻿namespace divas_dynasty.wallet;
+﻿namespace domain.wallet;
 
 public record WithdrawData(decimal WithdrawAmount, decimal Balance);

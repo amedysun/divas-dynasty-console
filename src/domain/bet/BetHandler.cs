@@ -1,8 +1,8 @@
-﻿using divas_dynasty.shared;
-using divas_dynasty.wallet;
+﻿using domain.shared;
+using domain.wallet;
 using Serilog;
 
-namespace divas_dynasty.game;
+namespace domain.game;
 
 public class BetHandler(Wallet wallet, Game game, IValidator<BettingData> validator) : IHandler<BetCommand>
 {

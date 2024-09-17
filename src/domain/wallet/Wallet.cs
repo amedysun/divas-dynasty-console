@@ -1,4 +1,4 @@
-﻿namespace divas_dynasty.wallet;
+﻿namespace domain.wallet;
 
 public class Wallet
 {

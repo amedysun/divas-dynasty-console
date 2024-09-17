@@ -1,6 +1,6 @@
-﻿using divas_dynasty.shared;
+﻿using domain.shared;
 
-namespace divas_dynasty.wallet;
+namespace domain.wallet;
 
 public class WithdrawValidator : IValidator<WithdrawData>
 {

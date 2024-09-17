@@ -1,7 +1,7 @@
-﻿using divas_dynasty.shared;
+﻿using domain.shared;
 using Serilog;
 
-namespace divas_dynasty.wallet;
+namespace domain.wallet;
 
 public class DepositHandler(Wallet wallet, IValidator<decimal> validator) : IHandler<DepositCommand>
 {

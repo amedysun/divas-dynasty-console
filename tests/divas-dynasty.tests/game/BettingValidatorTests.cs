@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using divas_dynasty.game;
+using domain.game;
 
 namespace game;
 

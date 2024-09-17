@@ -1,8 +1,8 @@
-﻿using divas_dynasty.game;
-using divas_dynasty.wallet;
+﻿using domain.game;
+using domain.wallet;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace divas_dynasty.shared
+namespace domain.shared
 {
     public static class ServiceCollectionExtensions
     {

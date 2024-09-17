@@ -1,6 +1,6 @@
-﻿using divas_dynasty.shared;
+﻿using domain.shared;
 
-namespace divas_dynasty.game;
+namespace domain.game;
 
 public class BettingValidator : IValidator<BettingData>
 {

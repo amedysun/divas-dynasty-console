@@ -1,4 +1,4 @@
-namespace divas_dynasty.shared;
+namespace domain.shared;
 
 public interface IValidator<T>
 {

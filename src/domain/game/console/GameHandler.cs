@@ -1,7 +1,7 @@
-using divas_dynasty.wallet;
-using divas_dynasty.shared;
+using domain.wallet;
+using domain.shared;
 
-namespace divas_dynasty.game
+namespace domain.game
 {
     public class GameHandler(
         IHandler<DepositCommand> depositHandler,
