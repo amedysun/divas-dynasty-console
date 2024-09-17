@@ -1,6 +1,6 @@
 ﻿namespace domain.shared;
 
-public interface IHandler<T>
+public interface IHandler<TRequest, TResponse>
 {
-    void Handle(T request);
+    TResponse Handle(TRequest request);
 }

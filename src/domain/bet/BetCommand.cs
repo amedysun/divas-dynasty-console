@@ -1,3 +1,3 @@
-﻿namespace domain.game;
+﻿namespace domain.bet;
 
 public record BetCommand(decimal Amount);

@@ -1,19 +1,19 @@
-﻿using domain.shared;
+﻿using domain.game;
+using domain.shared;
 using domain.wallet;
-using Serilog;
 
-namespace domain.game;
+namespace domain.bet;
 
-public class BetHandler(Wallet wallet, Game game, IValidator<BettingData> validator) : IHandler<BetCommand>
+public class BetHandler(Wallet wallet, Game game, IValidator<BettingData> validator) : IHandler<BetCommand, BetResponse>
 {
-    public void Handle(BetCommand command)
+    public BetResponse Handle(BetCommand command)
     {
         var betAmount = command.Amount;
         validator.Validate(new BettingData(betAmount, wallet.Balance));
         BetResult betResult = game.PlaceBet(betAmount);
         wallet.UpdateBalance(betAmount, betResult.WinAmount);
 
-        Log.Information(betResult.IsWin
+        return new BetResponse(betResult.IsWin
             ? $"You won: ${betResult.WinAmount:F2}. Current balance: ${wallet.Balance:F2}"
             : $"You lost the bet. Current balance: ${wallet.Balance:F2}");
     }

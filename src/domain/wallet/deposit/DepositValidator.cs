@@ -1,6 +1,6 @@
 ﻿using domain.shared;
 
-namespace domain.wallet;
+namespace domain.wallet.deposit;
 
 public class DepositValidator : IValidator<decimal>
 {

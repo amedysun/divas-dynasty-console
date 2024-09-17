@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using domain.game;
 using domain.shared;
+using domain.game.console;
 
 namespace divas_dynasty
 {
@@ -23,7 +23,7 @@ namespace divas_dynasty
                 try
                 {
                     Console.WriteLine("Please, submit action:");
-                    gameHandler.Handle(Console.ReadLine());
+                    Log.Information(gameHandler.Handle(new GameCommand(Console.ReadLine())).Message);
                 }
                 catch (Exception ex)
                 {

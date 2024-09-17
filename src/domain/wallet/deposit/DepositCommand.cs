@@ -1,3 +1,3 @@
-﻿namespace domain.wallet;
+﻿namespace domain.wallet.deposit;
 
 public record DepositCommand(decimal Amount);

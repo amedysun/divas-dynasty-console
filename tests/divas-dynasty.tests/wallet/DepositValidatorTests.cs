@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using domain.wallet;
+using domain.wallet.deposit;
 
 namespace wallet;
 

@@ -1,6 +1,6 @@
 ﻿using domain.shared;
 
-namespace domain.game;
+namespace domain.bet;
 
 public class BettingValidator : IValidator<BettingData>
 {
@@ -11,7 +11,7 @@ public class BettingValidator : IValidator<BettingData>
             throw new ArgumentException("Bet amount must be between $1 and $10.");
         }
 
-        if(data.Balance < data.BetAmount)
+        if (data.Balance < data.BetAmount)
         {
             throw new ArgumentException("Insufficient balance to place the bet.");
         }

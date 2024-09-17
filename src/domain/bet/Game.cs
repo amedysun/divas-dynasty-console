@@ -1,4 +1,6 @@
-﻿namespace domain.game;
+﻿using domain.bet;
+
+namespace domain.game;
 
 public class Game(Random random)
 {

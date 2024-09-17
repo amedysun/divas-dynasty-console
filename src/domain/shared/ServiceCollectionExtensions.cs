@@ -1,5 +1,9 @@
-﻿using domain.game;
+﻿using domain.bet;
+using domain.game;
+using domain.game.console;
 using domain.wallet;
+using domain.wallet.deposit;
+using domain.wallet.withdraw;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace domain.shared
@@ -14,9 +18,9 @@ namespace domain.shared
             services.AddSingleton<IValidator<decimal>, DepositValidator>();
             services.AddSingleton<IValidator<WithdrawData>, WithdrawValidator>();
             services.AddSingleton<IValidator<BettingData>, BettingValidator>();
-            services.AddSingleton<IHandler<DepositCommand>, DepositHandler>();
-            services.AddSingleton<IHandler<WithdrawCommand>, WithdrawHandler>();
-            services.AddSingleton<IHandler<BetCommand>, BetHandler>();
+            services.AddSingleton<IHandler<DepositCommand, DepositResponse>, DepositHandler>();
+            services.AddSingleton<IHandler<WithdrawCommand, WithdrawResponse>, WithdrawHandler>();
+            services.AddSingleton<IHandler<BetCommand, BetResponse>, BetHandler>();
             services.AddSingleton<GameHandler>();
         }
     }

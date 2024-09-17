@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using domain.game;
+using domain.bet;
 
 namespace game;
 

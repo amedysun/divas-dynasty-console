@@ -1,16 +1,19 @@
-using domain.wallet;
+using domain.bet;
 using domain.shared;
+using domain.wallet.deposit;
+using domain.wallet.withdraw;
 
-namespace domain.game
+namespace domain.game.console
 {
     public class GameHandler(
-        IHandler<DepositCommand> depositHandler,
-        IHandler<WithdrawCommand> withdrawHandler,
-        IHandler<BetCommand> betHandler
-        ) : IHandler<string>
+        IHandler<DepositCommand, DepositResponse> depositHandler,
+        IHandler<WithdrawCommand, WithdrawResponse> withdrawHandler,
+        IHandler<BetCommand, BetResponse> betHandler
+        ) : IHandler<GameCommand, GameResponse>
     {
-        public void Handle(string input)
+        public GameResponse Handle(GameCommand command)
         {
+            string input = command.Input;
             if (string.IsNullOrWhiteSpace(input))
             {
                 throw new InvalidOperationException("No input received. Please try again.");
@@ -39,20 +42,24 @@ namespace domain.game
                 throw new InvalidOperationException("Invalid amount.");
             }
 
+            string message;
+
             switch (action)
             {
                 case GameAction.Deposit:
-                    depositHandler.Handle(new DepositCommand(amount));
+                    message = depositHandler.Handle(new DepositCommand(amount)).Message;
                     break;
                 case GameAction.Withdraw:
-                    withdrawHandler.Handle(new WithdrawCommand(amount));
+                    message = withdrawHandler.Handle(new WithdrawCommand(amount)).Message;
                     break;
                 case GameAction.Bet:
-                    betHandler.Handle(new BetCommand(amount));
+                    message = betHandler.Handle(new BetCommand(amount)).Message;
                     break;
                 default:
                     throw new InvalidOperationException("Invalid action. Please try again.");
             }
+
+            return new GameResponse(message);
         }
     }
 }

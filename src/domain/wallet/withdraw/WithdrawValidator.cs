@@ -1,6 +1,6 @@
 ﻿using domain.shared;
 
-namespace domain.wallet;
+namespace domain.wallet.withdraw;
 
 public class WithdrawValidator : IValidator<WithdrawData>
 {
