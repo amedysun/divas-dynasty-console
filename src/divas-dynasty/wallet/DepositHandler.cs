@@ -10,6 +10,6 @@ public class DepositHandler(Wallet wallet, IValidator<decimal> validator) : IHan
         var depositAmount = command.Amount;
         validator.Validate(depositAmount);
         wallet.Deposit(depositAmount);
-        Log.Information($"Your deposit of ${depositAmount} was successful. Your current balance is: ${wallet.Balance}");
+        Log.Information($"Your deposit of ${depositAmount:F2} was successful. Your current balance is: ${wallet.Balance:F2}");
     }
 }
