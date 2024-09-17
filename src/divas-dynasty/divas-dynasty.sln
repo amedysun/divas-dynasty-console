@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "divas-dynasty", "divas-dynasty.csproj", "{8110E7B0-A3BE-4417-B922-E62E9952C6F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "divas-dynasty.console", "divas-dynasty.console.csproj", "{8110E7B0-A3BE-4417-B922-E62E9952C6F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "divas-dynasty.tests", "..\..\tests\divas-dynasty.tests\divas-dynasty.tests.csproj", "{DBA0F0E4-3065-4C11-8C71-7D6D17273674}"
 EndProject
